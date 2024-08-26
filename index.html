@@ -23,6 +23,7 @@
                         break;
 
                     default:
+                        $root.innerHTML = "";
                         break;
                 }
             }
@@ -34,6 +35,14 @@
                     navigate(state);
                 });
             });
+
+            const $replaceBtn = document.getElementById("replaceBtn");
+            $replaceBtn.addEventListener("click", () => {
+                const state = { path: "company" };
+                history.replaceState(state, "", "/company");
+                navigate(state);
+            });
+
             window.addEventListener("popstate", (e) => {
                 navigate(e.state);
             });
@@ -70,6 +79,9 @@
             <button id="forwardBtn">forward</button>
             <input id="goNum" />
             <button id="goBtn">go</button>
+        </div>
+        <div>
+            <button id="replaceBtn">replaceState</button>
         </div>
         <div id="root"></div>
     </body>
