@@ -3,11 +3,28 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="index.css" />
         <title>Document</title>
         <script type="module">
             function navigate(state) {
                 const h1 = document.querySelector("h1");
                 h1.textContent = state.path.toUpperCase();
+                const { path } = state;
+                const $root = document.getElementById("root");
+                switch (path) {
+                    case "home":
+                        $root.innerHTML = `<div id="homeDiv">homeDiv</div>`;
+                        break;
+                    case "about":
+                        $root.innerHTML = `<div id="aboutDiv">aboutDiv</div>`;
+                        break;
+                    case "contact":
+                        $root.innerHTML = `<div id="contactDiv">contackDiv</div>`;
+                        break;
+
+                    default:
+                        break;
+                }
             }
             ["home", "about", "contact"].forEach((path) => {
                 const button = document.querySelector(`#${path}`);
@@ -20,6 +37,25 @@
             window.addEventListener("popstate", (e) => {
                 navigate(e.state);
             });
+
+            const $backBtn = document.querySelector("#backBtn");
+            const backBtnHandle = () => {
+                window.history.back();
+            };
+            $backBtn.addEventListener("click", () => backBtnHandle());
+
+            const $forwardBtn = document.querySelector("#forwardBtn");
+            const forwardBtnHandle = () => {
+                window.history.forward();
+            };
+            $forwardBtn.addEventListener("click", () => forwardBtnHandle());
+
+            const $goBtn = document.querySelector("#goBtn");
+            const goBtnHandle = () => {
+                const goNum = document.querySelector("#goNum").value;
+                window.history.go(goNum);
+            };
+            $goBtn.addEventListener("click", () => goBtnHandle());
         </script>
     </head>
     <body>
@@ -29,5 +65,12 @@
             <button id="contact">Contact</button>
         </div>
         <h1></h1>
+        <div>
+            <button id="backBtn">back</button>
+            <button id="forwardBtn">forward</button>
+            <input id="goNum" />
+            <button id="goBtn">go</button>
+        </div>
+        <div id="root"></div>
     </body>
 </html>
